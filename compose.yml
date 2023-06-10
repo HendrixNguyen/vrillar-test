@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:alpine
+    volumes:
+      - ./db_temp:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: dev
+
+  scrawling:
+    image: node:18-alpine
+    environment:
+      DATABASE_URL: mongodb://root:example@db:27017/dev
