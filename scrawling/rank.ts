@@ -1,6 +1,7 @@
 import axios from "axios";
 import cheerio from "cheerio";
-import {createRank} from "../db_connector/RankRepositoty";
+import {createRank, createTeam} from "../db_connector/RankRepositoty";
+import {connectDb} from "../db_connector/schemas";
 
 export const crawlRank = async () => {
     try {
@@ -8,13 +9,15 @@ export const crawlRank = async () => {
         const html = res.data;
         const $ = cheerio.load(html)
         const getData = $(".listing-link > fieldset > .listing-item ")
-        getData.each(function (this: any, index) {
+        getData.each(async function (this: any, index) {
             let rank = getClass($(this), ".listing-standing>.rank")
             let points = getClass($(this), ".listing-standing>.points>.f1-wide--s")
             let teamName = getClass($(this), ".listing-info > .name > span")
+            // let racer = getClass($(this),".listing-team-drivers > .driver-info > span")
 
-            createRank({rank: +rank, points: +points})
-
+            await createRank({rank: +rank, points: +points})
+            await createTeam({name: teamName, teamRank: +rank})
+            // await  createTeam({name: })
             console.log({rank, points, teamName})
         })
 
