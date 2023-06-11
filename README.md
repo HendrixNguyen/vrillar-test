@@ -20,7 +20,7 @@ Crawling Data:
     
     yarn crawling
 
-To start the Rest API:
+Copy then .env.example to .env and then start the Rest API:
 
     yarn start
 
