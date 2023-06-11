@@ -3,7 +3,8 @@ import {DATABASE_URL} from "../conf";
 
 
 export const connectDb = () => {
-    return mongoose.connect(DATABASE_URL).catch((e) => console.error(e))
+    return mongoose.connect(DATABASE_URL).then(() => console.log("DB has Connected")).catch((e) => console.error(e))
+
 }
 const rankSchema = new Schema({
     rank: Number,

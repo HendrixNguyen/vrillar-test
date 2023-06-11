@@ -11,6 +11,12 @@ services:
       MONGO_INITDB_DATABASE: dev
 
   scrawling:
-    image: node:18-alpine
-    environment:
-      DATABASE_URL: mongodb://root:example@db:27017/dev
+    image: node:18
+    working_dir: /app
+    volumes:
+      - ./:/app
+    ports:
+      - "8080:8080"
+    command:  bash -c "yarn start:api"
+    env_file:
+      - ./.env

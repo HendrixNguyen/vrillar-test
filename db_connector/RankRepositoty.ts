@@ -14,7 +14,7 @@ export const createRank = async (data: { rank: number, points: number }) => {
     }
 }
 
-export const createRacer = async (data: {name: string, team: string}) => {
+export const createRacer = async (data: { name: string, team: string }) => 
     const _team = await rank.findOne().where({'name': data.team}).exec()
     const _datatable = new racer({name: data.name, team: _team?._id})
     await _datatable.save()
@@ -35,9 +35,15 @@ export const getTeam = async (teamName: string) => {
     return _team
 }
 export const getAllTeam = async () => {
-    const _teams = await team.find().exec();
-    return _teams;
+    return await team.find().exec();
 }
+
+export const getRanks = async (data: { id: any }) => {
+    const {id} = data
+    const ranks = await rank.findById(id).exec();
+    return ranks;
+
+
 export const getRanks = async () => {
     const ranks = await rank.find().exec();
     return ranks
